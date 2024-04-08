@@ -1,0 +1,2 @@
+mongos shell path : C:\Users\bhave\AppData\Local\Programs\mongosh\
+command to run : cd C:\Users\bhave\AppData\Local\Programs\mongosh\
