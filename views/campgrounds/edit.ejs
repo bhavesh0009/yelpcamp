@@ -11,5 +11,45 @@
   </div>
   <!-- <input type="submit" value="Create"> -->
   <button>Update Campground</button>
-  <a href="/campgrounds/<%= campground._id %>">Back To Campground</a>
+
 </form>
+
+
+
+<div class="row">
+  <h1 class="text-center">New Campground</h1>
+  <div class="col-6 offset-3">
+    <form action="/campgrounds/<%= campground._id %>?_method=PUT" method="POST">
+      <div class="mb-3">
+        <label class="form-label" for="title">Title</label>
+        <input class="form-control" type="text" name="campground[title]" id="title" value="<%= campground.title %>">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="location">Location</label>
+        <input class="form-control" type="text" name="campground[location]" id="location" value="<%= campground.location %>">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="image">Image Url</label>
+        <input class="form-control" type="text" name="campground[image]" id="image" value="<%= campground.image %>">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="price">Campground Price</label>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="price-label">$</span>
+          <input type="text" class="form-control" placeholder="0.00" aria-label="Price" aria-describedby="price-label" name="campground[price]" value="<%= campground.price %>">
+        </div>
+
+        <!-- <input class=" form-control" type="number" name="campground[price]" id="price"> -->
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" name="campground[description]" <%= campground.description %> id="description"></textarea>
+      </div>
+      <div class="mb-3">
+        <button class="btn btn-info">Update Campground</button>
+      </div>
+
+    </form>
+    <a href="/campgrounds/<%= campground._id %>">Back To Campground</a>
+  </div>
+</div>
