@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+const Joi = require('joi');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const Campground = require('./models/campground');
@@ -41,23 +42,33 @@ app.get("/campgrounds/new", catchAsync(async (req, res) => {
 }));
 
 app.post("/campgrounds", catchAsync(async (req, res, next) => {
-    if (!req.body.campground) throw new ExpressError("Invalid Campground Data", 400);
+    // if (!req.body.campground) throw new ExpressError("Invalid Campground Data", 400);
+    const campgroundSchema = Joi.object({
+        campground: Joi.object({
+            title: Joi.string().required(),
+            price: Joi.number().min(0).required(),
+            image: Joi.string().required(),
+            location: Joi.string().required(),
+            description: Joi.string().required()
+        }).required()
+    })
+    const { error } = campgroundSchema.validate(req.body);
+    // console.log(result);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    }
+
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
 }));
 
 app.get('/campgrounds/:id', catchAsync(async (req, res,) => {
-    console.log("I am in find page.");
     const campground = await Campground.findById(req.params.id);
     // res.status(statusCode).send(message);
     res.render('campgrounds/show', { campground });
 }));
-
-// app.get('/campgrounds/:id', catchAsync(async (req, res,) => {
-//     const campground = await Campground.findById(req.params.id)
-//     res.render('campgrounds/show', { campground });
-// }));
 
 app.get("/campgrounds/:id/edit", catchAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
