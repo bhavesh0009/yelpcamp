@@ -14,7 +14,3 @@ YelpCamp is designed to provide users with a platform to discover and reserve ca
 - Reviews and ratings: Users can leave reviews and ratings for campsites they have visited.
 - Search functionality: Search for campsites based on location, amenities, and other criteria.
 - Responsive design: The application is designed to work seamlessly across various devices and screen sizes.
-
-## Author
-
-- Bhavesh Ghodasara
