@@ -5,6 +5,8 @@ const ExpressError = require('../utils/ExpressError');
 const Campground = require('../models/campground');
 const { campgroundSchema } = require('../schemas.js');
 
+const ObjectID = require('mongoose').Types.ObjectId;
+
 const validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
     if (error) {
@@ -33,7 +35,12 @@ router.post("/", validateCampground, catchAsync(async (req, res, next) => {
 }));
 
 router.get('/:id', catchAsync(async (req, res,) => {
-    const campground = await Campground.findById(req.params.id).populate('reviews');
+    const { id } = req.params;
+    if (!ObjectID.isValid(id)) {
+        req.flash('error', 'Invalid campground Id!');
+        return res.redirect('/campgrounds');
+    }
+    const campground = await Campground.findById(id).populate('reviews');
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
@@ -41,8 +48,13 @@ router.get('/:id', catchAsync(async (req, res,) => {
     res.render('campgrounds/show', { campground });
 }));
 
+
 router.get("/:id/edit", catchAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
+    if (!campground) {
+        req.flash('error', 'Cannot find that campground!');
+        return res.redirect('/campgrounds');
+    }
     res.render("campgrounds/edit", { campground });
 }));
 
