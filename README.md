@@ -21,3 +21,4 @@ YelpCamp is designed to provide users with a platform to discover and reserve ca
 - Learned Signing cookies and middlewear cookies.
 - Learned about Sessions.
 - Learned about sessions again.
+- Auth demo
