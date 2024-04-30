@@ -22,3 +22,4 @@ YelpCamp is designed to provide users with a platform to discover and reserve ca
 - Learned about Sessions.
 - Learned about sessions again.
 - Auth demo
+- Auth deom one more day
