@@ -48,6 +48,11 @@ router.get('/:id', catchAsync(async (req, res,) => {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
+    // console.log(currentUser & campground.author.equals(currentUser));
+    console.log(currentUser);
+    console.log(campground.author);
+    console.log(campground.author.equals(currentUser));
+
     res.render('campgrounds/show', { campground });
 }));
 

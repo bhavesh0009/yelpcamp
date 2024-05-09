@@ -8,12 +8,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 
-const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
-const Campground = require('./models/campground');
-const Review = require('./models/review');
 const methodOverride = require('method-override');
-const { campgroundSchema, reviewSchema } = require('./schemas.js');
 
 
 const campgroundsRoutes = require('./routes/campgrounds');
@@ -64,6 +60,7 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    console.log(req.user);
     next();
 });
 
