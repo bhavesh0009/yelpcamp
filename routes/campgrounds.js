@@ -49,9 +49,9 @@ router.get('/:id', catchAsync(async (req, res,) => {
         return res.redirect('/campgrounds');
     }
     // console.log(currentUser & campground.author.equals(currentUser));
-    console.log(currentUser);
-    console.log(campground.author);
-    console.log(campground.author.equals(currentUser));
+    // console.log(currentUser);
+    // console.log(campground.author);
+    // console.log(campground.author.equals(currentUser));
 
     res.render('campgrounds/show', { campground });
 }));
