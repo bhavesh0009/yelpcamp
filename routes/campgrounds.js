@@ -26,19 +26,23 @@ router.post("/", isLoggedIn, validateCampground, catchAsync(async (req, res, nex
 
 router.get('/:id', catchAsync(async (req, res,) => {
     const { id } = req.params;
+    // console.log(req.params.id);
     if (!ObjectID.isValid(id)) {
         req.flash('error', 'Invalid campground Id!');
         return res.redirect('/campgrounds');
     }
-    const campground = await Campground.findById(id).populate('reviews').populate('author');
+    const campground = await Campground.findById(req.params.id).populate({
+        path: 'reviews',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author');
+
     if (!campground) {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-    // console.log(currentUser & campground.author.equals(currentUser));
-    // console.log(currentUser);
-    // console.log(campground.author);
-    // console.log(campground.author.equals(currentUser));
+
 
     res.render('campgrounds/show', { campground });
 }));
