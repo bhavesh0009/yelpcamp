@@ -13,14 +13,14 @@ const upload = multer({ storage });
 
 router.route('/')
     .get(catchAsync(campgrounds.index))
-    // .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground));
-    .post(upload.single('image'), (req, res) => {
-        // res.send(req.body, req.file)
-        console.log(req.body, req.file);
-        res.send('Uploaded!');
-        // res.redirect('/campgrounds');
+    .post(isLoggedIn, upload.array('image'), validateCampground, catchAsync(campgrounds.createCampground));
+// .post(upload.array('image'), (req, res) => {
+//     // res.send(req.body, req.file)
+//     console.log(req.body, req.file);
+//     res.send('Uploaded!');
+//     // res.redirect('/campgrounds');
 
-    });
+
 
 
 router.get("/new", isLoggedIn, campgrounds.renderNewForm);
