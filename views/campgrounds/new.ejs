@@ -12,7 +12,15 @@
         <input class="form-control" type="text" name="campground[location]" id="location" required>
       </div>
 
-      <input type="file" class="form-file-input" id="image" name="images" multiple>
+      <!-- <input type="file" class="form-file-input" id="image" name="images" multiple> -->
+      <!-- <div class="input-group mb-3">
+        <input type="file" class="form-control" id="image" name="images" multiple="multiple">
+        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+      </div> -->
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Upload Images</label>
+        <input class="form-control" type="file" id="formFile" name="images" multiple="multiple">
+      </div>
       <div class="mb-3">
         <label class="form-label" for="price">Campground Price</label>
         <div class="input-group mb-3">
