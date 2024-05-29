@@ -1,6 +1,9 @@
 const Campground = require('../models/campground');
 const ObjectID = require('mongoose').Types.ObjectId;
 const { cloudinary } = require("../cloudinary");
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 
 
 module.exports.index = async (req, res) => {
@@ -13,6 +16,11 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createCampground = async (req, res, next) => {
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send()
+    console.log(geoData.body.features[0].geometry.coordinates);
     const campground = new Campground(req.body.campground);
     // campground.geometry = { type: "Point", coordinates: [req.body.campground.lng, req.body.campground.lat] };
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
@@ -64,7 +72,7 @@ module.exports.updateCampground = async (req, res) => {
     if (req.body.deleteImages) {
         for (let filename of req.body.deleteImages) {
             await cloudinary.uploader.destroy(filename);
-        }   
+        }
         await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
         console.log(campground);
     }
