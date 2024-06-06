@@ -41,11 +41,20 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// // Define CSP policy to include Unsplash as an allowed source for images
+// const cspConfig = {
+//     directives: {
+//         defaultSrc: ["'self'"],
+//         imgSrc: ["'self'", "data:", "https://images.unsplash.com"],
+//         // Add other directives as needed
+//     },
+// };
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
-app.use(helmet({ contentSecurityPolicy: false}));
+app.use(helmet({ contentSecurityPolicy: false }));
 
 
 const sessionConfig = {
